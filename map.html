@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Vizag Tourism Map</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<style>
+  body { margin:0; }
+  #title {
+    background-color: #0a3d62;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+  }
+  #map { height: calc(100vh - 50px); }
+</style>
+</head>
+<body>
+
+<div id="title">🌏 Vizag Tourism Interactive Map</div>
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+// Create map
+var map = L.map('map').setView([17.74, 83.30], 11);
+
+// Add OpenStreetMap tiles
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+// Custom colored marker icon
+function coloredMarker(color) {
+    return new L.Icon({
+        iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-${color}.png`,
+        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41]
+    });
+}
+
+// Marker data
+var places = [
+    {
+        coords: [17.7142, 83.3237],
+        name: "R.K. Beach",
+        color: "blue",
+        img: "https://upload.wikimedia.org/wikipedia/commons/0/0c/RK_Beach_Visakhapatnam.jpg",
+        desc: "Famous beach for evening walks, snacks, and sunrise views.",
+        category: "Beach Tourism",
+        best: "Oct–Feb"
+    },
+    {
+        coords: [17.7664, 83.3496],
+        name: "Kambalakonda Wildlife Sanctuary",
+        color: "green",
+        img: "https://upload.wikimedia.org/wikipedia/commons/4/47/Kambalakonda_Wildlife_Sanctuary.JPG",
+        desc: "Eco-tourism spot with trekking and wildlife trails.",
+        category: "Wildlife Tourism",
+        best: "Nov–Feb"
+    },
+    {
+        coords: [17.7513, 83.3422],
+        name: "Kailasagiri",
+        color: "orange",
+        img: "https://upload.wikimedia.org/wikipedia/commons/c/c2/Kailasagiri_Hill_Top.jpg",
+        desc: "Hilltop park with giant Shiva-Parvati statues and cable car.",
+        category: "Hill Tourism",
+        best: "Oct–Mar"
+    },
+    {
+        coords: [17.8285, 83.4092],
+        name: "Thotlakonda",
+        color: "yellow",
+        img: "https://upload.wikimedia.org/wikipedia/commons/2/20/Thotlakonda_Buddhist_complex.jpg",
+        desc: "Ancient Buddhist monastery ruins with sea view.",
+        category: "Heritage Tourism",
+        best: "Nov–Feb"
+    },
+    {
+        coords: [ 17.6765, 83.2926],
+        name: "Dolphin's Nose Lighthouse",
+        color: "red",
+        img: "https://upload.wikimedia.org/wikipedia/commons/6/60/Dolphins_Nose_Visakhapatnam.jpg",
+        desc: "Iconic cliff shaped like a dolphin's nose, offers city views.",
+        category: "Viewpoint Tourism",
+        best: "Nov–Feb"
+    },
+    {
+        coords: [17.7610, 83.2708],
+        name: "Simhachalam Temple",
+        color: "violet",
+        img: "https://upload.wikimedia.org/wikipedia/commons/3/38/Simhachalam_Temple_Gopuram.jpg",
+        desc: "Ancient Hindu temple dedicated to Lord Narasimha.",
+        category: "Religious Tourism",
+        best: "All year"
+    }
+];
+
+// Add markers
+places.forEach(function(place) {
+    L.marker(place.coords, { icon: coloredMarker(place.color) })
+        .addTo(map)
+        .bindPopup(`<b>${place.name}</b><br>
+        <img src="${place.img}" width="200"><br>
+        <i>${place.category}</i><br>
+        ${place.desc}<br>
+        <b>Best time:</b> ${place.best}`);
+});
+</script>
+
+</body>
+</html>
+
